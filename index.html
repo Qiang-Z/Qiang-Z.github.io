@@ -152,6 +152,215 @@
           <div id="js-content" class="content-ll">
             
   
+    <article id="post-栈队列01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/28/%E6%A0%88%E9%98%9F%E5%88%9701/">栈队列01</a>
+    </h1>
+  
+
+        
+        <a href="/2022/12/28/%E6%A0%88%E9%98%9F%E5%88%9701/" class="archive-article-date">
+  	<time datetime="2022-12-28T01:05:51.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-28</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>队列是先进先出，栈是先进后出</p>
+<h4 id="232-用栈实现队列"><a href="#232-用栈实现队列" class="headerlink" title="232. 用栈实现队列"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-queue-using-stacks/">232. 用栈实现队列</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyQueue</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        in主要负责push，out主要负责pop</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.stack_in = []</span><br><span class="line">        self.stack_out = []</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        有新元素进来，就往in里面push</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        self.stack_in.append(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Removes the element from in front of queue and returns that element.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">if</span> self.empty():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> self.stack_out:</span><br><span class="line">            <span class="keyword">return</span> self.stack_out.pop()</span><br><span class="line">        <span class="keyword">else</span>:</span><br><span class="line">            <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(self.stack_in)):</span><br><span class="line">                self.stack_out.append(self.stack_in.pop())</span><br><span class="line">            <span class="keyword">return</span> self.stack_out.pop()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">peek</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Get the front element.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        ans = self.pop()</span><br><span class="line">        self.stack_out.append(ans)</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">empty</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        只要in或者out有元素，说明队列不为空</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> (self.stack_in <span class="keyword">or</span> self.stack_out)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="用队列实现栈"><a href="#用队列实现栈" class="headerlink" title="用队列实现栈"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-stack-using-queues/">用队列实现栈</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MyStack</span>:</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line">        self.que = deque()</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">push</span>(<span class="params">self, x: <span class="built_in">int</span></span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        self.que.append(x)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">pop</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.empty():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(self.que) - <span class="number">1</span>):</span><br><span class="line">            self.que.append(self.que.popleft())</span><br><span class="line">        res = self.que.popleft()</span><br><span class="line">        <span class="keyword">return</span> res</span><br><span class="line">        </span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">top</span>(<span class="params">self</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        <span class="keyword">if</span> self.empty():</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">        ans = self.que[-<span class="number">1</span>]</span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">empty</span>(<span class="params">self</span>) -&gt; <span class="built_in">bool</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="keyword">not</span> self.que</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment"># Your MyStack object will be instantiated and called as such:</span></span><br><span class="line"><span class="comment"># obj = MyStack()</span></span><br><span class="line"><span class="comment"># obj.push(x)</span></span><br><span class="line"><span class="comment"># param_2 = obj.pop()</span></span><br><span class="line"><span class="comment"># param_3 = obj.top()</span></span><br><span class="line"><span class="comment"># param_4 = obj.empty()</span></span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/12/28/%E6%A0%88%E9%98%9F%E5%88%9701/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-字符串01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/23/%E5%AD%97%E7%AC%A6%E4%B8%B201/">字符串01</a>
+    </h1>
+  
+
+        
+        <a href="/2022/12/23/%E5%AD%97%E7%AC%A6%E4%B8%B201/" class="archive-article-date">
+  	<time datetime="2022-12-23T01:28:24.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-23</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="number">344.</span> 反转字符串</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseString</span>(<span class="params">self, s: <span class="type">List</span>[<span class="built_in">str</span>]</span>) -&gt; <span class="literal">None</span>:</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        Do not return anything, modify s in-place instead.</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        left = <span class="number">0</span></span><br><span class="line">        right = <span class="built_in">len</span>(s) - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> left &lt; right:</span><br><span class="line">            s[left], s[right] = s[right], s[left] </span><br><span class="line">            left += <span class="number">1</span></span><br><span class="line">            right -= <span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="541-反转字符串-II"><a href="#541-反转字符串-II" class="headerlink" title="541. 反转字符串 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-string-ii/">541. 反转字符串 II</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseStr</span>(<span class="params">self, s: <span class="built_in">str</span>, k: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        p = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">while</span> p &lt; <span class="built_in">len</span>(s):</span><br><span class="line">            p2 = p + k</span><br><span class="line">            </span><br><span class="line">            s = s[:p] + s[p:p2][::-<span class="number">1</span>] + s[p2:]</span><br><span class="line">            p = p + <span class="number">2</span>*k</span><br><span class="line"></span><br><span class="line">        <span class="keyword">return</span> s</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="剑指-Offer-05-替换空格"><a href="#剑指-Offer-05-替换空格" class="headerlink" title="剑指 Offer 05. 替换空格"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ti-huan-kong-ge-lcof/">剑指 Offer 05. 替换空格</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">replaceSpace</span>(<span class="params">self, s: <span class="built_in">str</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        counter = s.count(<span class="string">&#x27; &#x27;</span>)</span><br><span class="line">        </span><br><span class="line">        res = <span class="built_in">list</span>(s)</span><br><span class="line">        <span class="comment"># 每碰到一个空格就多拓展两个格子，1 + 2 = 3个位置存’%20‘</span></span><br><span class="line">        res.extend([<span class="string">&#x27; &#x27;</span>] * counter * <span class="number">2</span>)</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># 原始字符串的末尾，拓展后的末尾</span></span><br><span class="line">        left, right = <span class="built_in">len</span>(s) - <span class="number">1</span>, <span class="built_in">len</span>(res) - <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">while</span> left &gt;= <span class="number">0</span>:</span><br><span class="line">            <span class="keyword">if</span> res[left] != <span class="string">&#x27; &#x27;</span>:</span><br><span class="line">                res[right] = res[left]</span><br><span class="line">                right -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                <span class="comment"># [right - 2, right), 左闭右开</span></span><br><span class="line">                res[right - <span class="number">2</span>: right + <span class="number">1</span>] = <span class="string">&#x27;%20&#x27;</span></span><br><span class="line">                right -= <span class="number">3</span></span><br><span class="line">            left -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(res)</span><br></pre></td></tr></table></figure>
+
+<h4 id="151-反转字符串中的单词"><a href="#151-反转字符串中的单词" class="headerlink" title="151. 反转字符串中的单词"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reverse-words-in-a-string/">151. 反转字符串中的单词</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">  <span class="comment">#1.去除多余的空格</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">trim_spaces</span>(<span class="params">self, s</span>):     </span><br><span class="line">            n = <span class="built_in">len</span>(s)</span><br><span class="line">            left = <span class="number">0</span></span><br><span class="line">            right = n-<span class="number">1</span></span><br><span class="line">        </span><br><span class="line">            <span class="keyword">while</span> left &lt;= right <span class="keyword">and</span> s[left] == <span class="string">&#x27; &#x27;</span>:    <span class="comment">#去除开头的空格</span></span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">while</span> left &lt;= right <span class="keyword">and</span> s[right] == <span class="string">&#x27; &#x27;</span>:   <span class="comment">#去除结尾的空格</span></span><br><span class="line">                right = right-<span class="number">1</span></span><br><span class="line">            tmp = []</span><br><span class="line">            <span class="keyword">while</span> left &lt;= right:                      <span class="comment">#去除单词中间多余的空格</span></span><br><span class="line">                <span class="keyword">if</span> s[left] != <span class="string">&#x27; &#x27;</span>:</span><br><span class="line">                    tmp.append(s[left])</span><br><span class="line">                <span class="keyword">elif</span> tmp[-<span class="number">1</span>] != <span class="string">&#x27; &#x27;</span>:                 <span class="comment">#当前位置是空格，但是相邻的上一个位置不是空格，则该空格是合理的</span></span><br><span class="line">                    tmp.append(s[left])</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> tmp</span><br><span class="line">	    </span><br><span class="line"> <span class="comment">#2.翻转字符数组</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">reverse_string</span>(<span class="params">self, nums, left, right</span>):</span><br><span class="line">            <span class="keyword">while</span> left &lt; right:</span><br><span class="line">                nums[left], nums[right] = nums[right], nums[left]</span><br><span class="line">                left += <span class="number">1</span></span><br><span class="line">                right -= <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line">	    </span><br><span class="line"> <span class="comment">#3.翻转每个单词</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">reverse_each_word</span>(<span class="params">self, nums</span>):</span><br><span class="line">            start = <span class="number">0</span></span><br><span class="line">            end = <span class="number">0</span></span><br><span class="line">            n = <span class="built_in">len</span>(nums)</span><br><span class="line">            <span class="keyword">while</span> start &lt; n:</span><br><span class="line">                <span class="keyword">while</span> end &lt; n <span class="keyword">and</span> nums[end] != <span class="string">&#x27; &#x27;</span>:</span><br><span class="line">                    end += <span class="number">1</span></span><br><span class="line">                self.reverse_string(nums, start, end-<span class="number">1</span>)</span><br><span class="line">                start = end + <span class="number">1</span></span><br><span class="line">                end += <span class="number">1</span></span><br><span class="line">            <span class="keyword">return</span> <span class="literal">None</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#4.翻转字符串里的单词</span></span><br><span class="line">        <span class="keyword">def</span> <span class="title function_">reverseWords</span>(<span class="params">self, s</span>):                <span class="comment">#测试用例：&quot;the sky is blue&quot;</span></span><br><span class="line">            l = self.trim_spaces(s)               <span class="comment">#输出：[&#x27;t&#x27;, &#x27;h&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;s&#x27;, &#x27;k&#x27;, &#x27;y&#x27;, &#x27; &#x27;, &#x27;i&#x27;, &#x27;s&#x27;, &#x27; &#x27;, &#x27;b&#x27;, &#x27;l&#x27;, &#x27;u&#x27;, &#x27;e&#x27;</span></span><br><span class="line">            self.reverse_string(l,  <span class="number">0</span>, <span class="built_in">len</span>(l)-<span class="number">1</span>)  <span class="comment">#输出：[&#x27;e&#x27;, &#x27;u&#x27;, &#x27;l&#x27;, &#x27;b&#x27;, &#x27; &#x27;, &#x27;s&#x27;, &#x27;i&#x27;, &#x27; &#x27;, &#x27;y&#x27;, &#x27;k&#x27;, &#x27;s&#x27;, &#x27; &#x27;, &#x27;e&#x27;, &#x27;h&#x27;, &#x27;t&#x27;]</span></span><br><span class="line">            self.reverse_each_word(l)             <span class="comment">#输出：[&#x27;b&#x27;, &#x27;l&#x27;, &#x27;u&#x27;, &#x27;e&#x27;, &#x27; &#x27;, &#x27;i&#x27;, &#x27;s&#x27;, &#x27; &#x27;, &#x27;s&#x27;, &#x27;k&#x27;, &#x27;y&#x27;, &#x27; &#x27;, &#x27;t&#x27;, &#x27;h&#x27;, &#x27;e&#x27;]</span></span><br><span class="line">            <span class="keyword">return</span> <span class="string">&#x27;&#x27;</span>.join(l)                    <span class="comment">#输出：blue is sky the</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="剑指-Offer-58-II-左旋转字符串-96-96-96"><a href="#剑指-Offer-58-II-左旋转字符串-96-96-96" class="headerlink" title="剑指 Offer 58 - II. 左旋转字符串&#96;&#96;&#96;"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/zuo-xuan-zhuan-zi-fu-chuan-lcof/">剑指 Offer 58 - II. 左旋转字符串</a>&#96;&#96;&#96;</h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 方法一：可以使用切片方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseLeftWords</span>(<span class="params">self, s: <span class="built_in">str</span>, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        <span class="keyword">return</span> s[n:] + s[<span class="number">0</span>:n]</span><br><span class="line">    </span><br><span class="line"><span class="comment"># 方法二：也可以使用上文描述的方法，有些面试中不允许使用切片，那就使用上文作者提到的方法</span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">reverseLeftWords</span>(<span class="params">self, s: <span class="built_in">str</span>, n: <span class="built_in">int</span></span>) -&gt; <span class="built_in">str</span>:</span><br><span class="line">        s = <span class="built_in">list</span>(s)</span><br><span class="line">        s[<span class="number">0</span>:n] = <span class="built_in">list</span>(<span class="built_in">reversed</span>(s[<span class="number">0</span>:n]))</span><br><span class="line">        s[n:] = <span class="built_in">list</span>(<span class="built_in">reversed</span>(s[n:]))</span><br><span class="line">        s.reverse()</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="string">&quot;&quot;</span>.join(s)</span><br><span class="line"> </span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/12/23/%E5%AD%97%E7%AC%A6%E4%B8%B201/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
+    <article id="post-Hashmap02" class="article article-type-post  article-index" itemscope itemprop="blogPost">
+  <div class="article-inner">
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2022/12/21/Hashmap02/">Hashmap02</a>
+    </h1>
+  
+
+        
+        <a href="/2022/12/21/Hashmap02/" class="archive-article-date">
+  	<time datetime="2022-12-21T02:10:27.000Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-21</time>
+</a>
+        
+      </header>
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <h4 id="454-四数相加-II"><a href="#454-四数相加-II" class="headerlink" title="454. 四数相加 II"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum-ii/">454. 四数相加 II</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fourSumCount</span>(<span class="params">self, nums1: <span class="type">List</span>[<span class="built_in">int</span>], nums2: <span class="type">List</span>[<span class="built_in">int</span>], nums3: <span class="type">List</span>[<span class="built_in">int</span>], nums4: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="built_in">int</span>:</span><br><span class="line">        hashmap = <span class="built_in">dict</span>()</span><br><span class="line">        <span class="keyword">for</span> n1 <span class="keyword">in</span> nums1:</span><br><span class="line">            <span class="keyword">for</span> n2 <span class="keyword">in</span> nums2:</span><br><span class="line">                <span class="keyword">if</span> n1 + n2 <span class="keyword">in</span> hashmap:</span><br><span class="line">                    hashmap[n1+n2] += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    hashmap[n1+n2] = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        count = <span class="number">0</span></span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> n3 <span class="keyword">in</span> nums3:</span><br><span class="line">            <span class="keyword">for</span> n4 <span class="keyword">in</span> nums4:</span><br><span class="line">                key = -n3 - n4</span><br><span class="line">                <span class="keyword">if</span> key <span class="keyword">in</span> hashmap:</span><br><span class="line">                    count += hashmap[key]</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> count</span><br></pre></td></tr></table></figure>
+
+<h4 id="383-赎金信"><a href="#383-赎金信" class="headerlink" title="383. 赎金信"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ransom-note/">383. 赎金信</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>(<span class="title class_ inherited__">object</span>):</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">canConstruct</span>(<span class="params">self, ransomNote, magazine</span>):</span><br><span class="line">        <span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">        :type ransomNote: str</span></span><br><span class="line"><span class="string">        :type magazine: str</span></span><br><span class="line"><span class="string">        :rtype: bool</span></span><br><span class="line"><span class="string">        &quot;&quot;&quot;</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># use a dict to store the number of letter occurance in ransomNote</span></span><br><span class="line">        hashmap = <span class="built_in">dict</span>()</span><br><span class="line">        <span class="keyword">for</span> s <span class="keyword">in</span> ransomNote:</span><br><span class="line">            <span class="keyword">if</span> s <span class="keyword">in</span> hashmap:</span><br><span class="line">                hashmap[s] += <span class="number">1</span></span><br><span class="line">            <span class="keyword">else</span>:</span><br><span class="line">                hashmap[s] = <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="comment"># check if the letter we need can be found in magazine</span></span><br><span class="line">        <span class="keyword">for</span> l <span class="keyword">in</span> magazine:</span><br><span class="line">            <span class="keyword">if</span> l <span class="keyword">in</span> hashmap:</span><br><span class="line">                hashmap[l] -= <span class="number">1</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">for</span> key <span class="keyword">in</span> hashmap:</span><br><span class="line">            <span class="keyword">if</span> hashmap[key] &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">return</span> <span class="literal">False</span></span><br><span class="line">        </span><br><span class="line">        <span class="keyword">return</span> <span class="literal">True</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="15-三数之和"><a href="#15-三数之和" class="headerlink" title="15. 三数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/3sum/">15. 三数之和</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">threeSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>]</span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        ans = []</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        nums.sort()</span><br><span class="line"></span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">            left = i + <span class="number">1</span></span><br><span class="line">            right = n - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">            <span class="keyword">if</span> nums[i] &gt; <span class="number">0</span>:</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            <span class="keyword">if</span> i &gt;= <span class="number">1</span> <span class="keyword">and</span> nums[i] == nums[i-<span class="number">1</span>]:</span><br><span class="line">                <span class="keyword">continue</span></span><br><span class="line">            </span><br><span class="line">            <span class="keyword">while</span> left &lt; right:</span><br><span class="line">                total = nums[i] + nums[left] + nums[right]</span><br><span class="line">                <span class="keyword">if</span> total &gt; <span class="number">0</span>:</span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">                <span class="keyword">elif</span> total &lt; <span class="number">0</span>:</span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                <span class="keyword">else</span>:</span><br><span class="line">                    ans.append([nums[i], nums[left], nums[right]])</span><br><span class="line">                    <span class="keyword">while</span> left != right <span class="keyword">and</span> nums[left] == nums[left + <span class="number">1</span>]: left += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">while</span> left != right <span class="keyword">and</span> nums[right] == nums[right - <span class="number">1</span>]: right -= <span class="number">1</span></span><br><span class="line">                    left += <span class="number">1</span></span><br><span class="line">                    right -= <span class="number">1</span></span><br><span class="line">            </span><br><span class="line">        <span class="keyword">return</span> ans</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h4 id="18-四数之和"><a href="#18-四数之和" class="headerlink" title="18. 四数之和"></a><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/4sum/">18. 四数之和</a></h4><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Solution</span>:</span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">fourSum</span>(<span class="params">self, nums: <span class="type">List</span>[<span class="built_in">int</span>], target: <span class="built_in">int</span></span>) -&gt; <span class="type">List</span>[<span class="type">List</span>[<span class="built_in">int</span>]]:</span><br><span class="line">        </span><br><span class="line">        nums.sort()</span><br><span class="line">        n = <span class="built_in">len</span>(nums)</span><br><span class="line">        res = []</span><br><span class="line">        <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):   </span><br><span class="line">            <span class="keyword">if</span> i &gt; <span class="number">0</span> <span class="keyword">and</span> nums[i] == nums[i - <span class="number">1</span>]: <span class="keyword">continue</span>  <span class="comment"># 对nums[i]去重</span></span><br><span class="line">            <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(i+<span class="number">1</span>, n):</span><br><span class="line">                <span class="keyword">if</span> k &gt; i + <span class="number">1</span> <span class="keyword">and</span> nums[k] == nums[k-<span class="number">1</span>]: <span class="keyword">continue</span>  <span class="comment"># 对nums[k]去重</span></span><br><span class="line">                p = k + <span class="number">1</span></span><br><span class="line">                q = n - <span class="number">1</span></span><br><span class="line"></span><br><span class="line">                <span class="keyword">while</span> p &lt; q:</span><br><span class="line">                    <span class="keyword">if</span> nums[i] + nums[k] + nums[p] + nums[q] &gt; target: q -= <span class="number">1</span></span><br><span class="line">                    <span class="keyword">elif</span> nums[i] + nums[k] + nums[p] + nums[q] &lt; target: p += <span class="number">1</span></span><br><span class="line">                    <span class="keyword">else</span>:</span><br><span class="line">                        res.append([nums[i], nums[k], nums[p], nums[q]])</span><br><span class="line">			<span class="comment"># 对nums[p]和nums[q]去重</span></span><br><span class="line">                        <span class="keyword">while</span> p &lt; q <span class="keyword">and</span> nums[p] == nums[p + <span class="number">1</span>]: p += <span class="number">1</span></span><br><span class="line">                        <span class="keyword">while</span> p &lt; q <span class="keyword">and</span> nums[q] == nums[q - <span class="number">1</span>]: q -= <span class="number">1</span></span><br><span class="line">                        p += <span class="number">1</span></span><br><span class="line">                        q -= <span class="number">1</span></span><br><span class="line">        <span class="keyword">return</span> res</span><br></pre></td></tr></table></figure>
+
+
+      
+
+      
+    </div>
+    <div class="article-info article-info-index">
+      
+      
+      
+
+      
+        <p class="article-more-link">
+          <a class="article-more-a" href="/2022/12/21/Hashmap02/">展开全文 >></a>
+        </p>
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+  </div>
+</article>
+
+<aside class="wrap-side-operation">
+    <div class="mod-side-operation">
+        
+        <div class="jump-container" id="js-jump-container" style="display:none;">
+            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
+                <i class="icon-font icon-back"></i>
+            </a>
+            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
+                <i class="icon-font icon-plane jump-plane"></i>
+            </div>
+        </div>
+        
+        
+    </div>
+</aside>
+
+
+
+
+  
     <article id="post-Hash-table01" class="article article-type-post  article-index" itemscope itemprop="blogPost">
   <div class="article-inner">
     
@@ -733,81 +942,10 @@
 
 
   
-    <article id="post-hello-world" class="article article-type-post  article-index" itemscope itemprop="blogPost">
-  <div class="article-inner">
-    
-      <header class="article-header">
-        
   
-    <h1 itemprop="name">
-      <a class="article-title" href="/2022/12/05/hello-world/">Hello World</a>
-    </h1>
-  
-
-        
-        <a href="/2022/12/05/hello-world/" class="archive-article-date">
-  	<time datetime="2022-12-05T01:52:11.331Z" itemprop="datePublished"><i class="icon-calendar icon"></i>2022-12-05</time>
-</a>
-        
-      </header>
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>Welcome to <a target="_blank" rel="noopener" href="https://hexo.io/">Hexo</a>! This is your very first post. Check <a target="_blank" rel="noopener" href="https://hexo.io/docs/">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a target="_blank" rel="noopener" href="https://hexo.io/docs/troubleshooting.html">troubleshooting</a> or you can ask me on <a target="_blank" rel="noopener" href="https://github.com/hexojs/hexo/issues">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">&quot;My New Post&quot;</span></span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/writing.html">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/server.html">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/generating.html">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-
-<p>More info: <a target="_blank" rel="noopener" href="https://hexo.io/docs/one-command-deployment.html">Deployment</a></p>
-
-      
-
-      
-    </div>
-    <div class="article-info article-info-index">
-      
-      
-      
-
-      
-        <p class="article-more-link">
-          <a class="article-more-a" href="/2022/12/05/hello-world/">展开全文 >></a>
-        </p>
-      
-
-      
-      <div class="clearfix"></div>
-    </div>
-  </div>
-</article>
-
-<aside class="wrap-side-operation">
-    <div class="mod-side-operation">
-        
-        <div class="jump-container" id="js-jump-container" style="display:none;">
-            <a href="javascript:void(0)" class="mod-side-operation__jump-to-top">
-                <i class="icon-font icon-back"></i>
-            </a>
-            <div id="js-jump-plan-container" class="jump-plan-container" style="top: -11px;">
-                <i class="icon-font icon-plane jump-plane"></i>
-            </div>
-        </div>
-        
-        
-    </div>
-</aside>
-
-
-
-
-  
+    <nav id="page-nav">
+      <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="extend next" rel="next" href="/page/2/">Next &amp;raquo;</a>
+    </nav>
   
 
 
